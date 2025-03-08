@@ -55,9 +55,9 @@ const SavedJobs = () => {
               <p>Location: {job.locationName}</p>
               <p>Salary: {job.salary}</p>
               <p>{job.description ? job.description : 'No description available'}</p>
-              <a href={job.link} target="_blank" rel="noopener noreferrer">
-                View Full Job Posting
-              </a>
+              <a href={job.link} className="btn btn-info" target="_blank" rel="noopener noreferrer">
+                      View Full Posting
+                    </a>
               <br />
               <button onClick={() => handleDeleteJob(job.jobId)} disabled={deleteLoading}>
                 {deleteLoading ? 'Deleting...' : 'Delete this Job!'}

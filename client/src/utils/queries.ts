@@ -10,7 +10,7 @@ export const GET_ME = gql`
       savedJobs {  # Changed from savedBooks to savedJobs
         jobId
         jobTitle
-        organizationName
+        companyName
         locationName
         salary
       }
@@ -28,7 +28,7 @@ export const GET_USER = gql`
       savedJobs {  # Changed from savedBooks to savedJobs
         jobId
         jobTitle
-        organizationName
+        companyName
         locationName
         salary
       }

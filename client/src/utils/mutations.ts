@@ -14,7 +14,7 @@ export const GET_ME = gql`
         locationName
         salary
         description
-        link
+        link  
       }
     }
   }
@@ -34,7 +34,7 @@ export const GET_USER = gql`
         locationName
         salary
         description
-        link
+        link 
       }
     }
   }
@@ -81,7 +81,7 @@ export const SAVE_JOB = gql`
         locationName
         salary
         description
-        link
+        link 
       }
     }
   }
@@ -100,7 +100,7 @@ export const DELETE_JOB = gql`
         locationName
         salary
         description
-        link
+        link 
       }
     }
   }

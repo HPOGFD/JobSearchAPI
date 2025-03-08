@@ -3,8 +3,6 @@ import { useMutation } from '@apollo/client';
 import { SAVE_JOB } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-
-
 // Define Job interface based on the Adzuna API response
 interface Job {
   jobId: string;
@@ -13,13 +11,14 @@ interface Job {
   locationName: string;
   salary: string;
   description: string;
-  link: string;
+  link: string
 }
 
 const SearchJobs = () => {
   const [searchedJobs, setSearchedJobs] = useState<Job[]>([]);
   const [searchInput, setSearchInput] = useState('');
-  const [loading, setLoading] = useState(false); // State for loading
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [saveJob] = useMutation(SAVE_JOB, {
     onError: (err) => console.error('Error saving job:', err),
   });
@@ -32,11 +31,13 @@ const SearchJobs = () => {
       return;
     }
 
-    setLoading(true); // Set loading state to true
+    setLoading(true);
+    setError('');
 
     try {
+      // Use the proxy endpoint on your server instead of direct API call
       const response = await fetch(
-        `https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=${import.meta.env.VITE_ADZUNA_APP_ID}&app_key=${import.meta.env.VITE_ADZUNA_APP_KEY}&query=${searchInput}`,
+        `http://localhost:3001/api/jobs/search?query=${encodeURIComponent(searchInput)}`
       );
       
       if (!response.ok) {
@@ -64,9 +65,9 @@ const SearchJobs = () => {
       setSearchInput('');
     } catch (err) {
       console.error('Error searching for jobs:', err);
-      alert('There was an error with the job search. Please try again later.');
+      setError('There was an error with the job search. Please try again later.');
     } finally {
-      setLoading(false); // Set loading state to false after the request is done
+      setLoading(false);
     }
   };
 
@@ -88,9 +89,11 @@ const SearchJobs = () => {
     const jobInput = {
       jobId: jobToSave.jobId,
       jobTitle: jobToSave.jobTitle,
-      organizationName: jobToSave.companyName,
+      companyName: jobToSave.companyName,
       locationName: jobToSave.locationName,
-      salary: jobToSave.salary
+      salary: jobToSave.salary,
+      description: jobToSave.description,
+      link: jobToSave.link,
     };
 
     try {
@@ -133,6 +136,14 @@ const SearchJobs = () => {
           </div>
         </form>
       </div>
+
+      {error && (
+        <div className="container mt-3">
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        </div>
+      )}
 
       <div className="container mt-4">
         <h2 className="text-center mb-4">

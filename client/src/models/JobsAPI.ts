@@ -1,6 +1,6 @@
 export interface JobInfo {
   jobTitle: string;
-  organizationName: string;
+  companyName: string;
   locationName: string;
   minimumRange: number;
 }
@@ -8,4 +8,6 @@ export interface JobInfo {
 export interface Job {
   jobId: string;
   jobInfo: JobInfo;
+  link: string;        // Added required field
+  description: string; // Added required field
 }
