@@ -13,6 +13,8 @@ export const GET_ME = gql`
         companyName
         locationName
         salary
+        link       
+        description
       }
     }
   }
@@ -31,6 +33,8 @@ export const GET_USER = gql`
         companyName
         locationName
         salary
+        link        
+        description 
       }
     }
   }

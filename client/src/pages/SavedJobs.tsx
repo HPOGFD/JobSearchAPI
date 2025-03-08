@@ -8,6 +8,7 @@ const SavedJobs = () => {
   const [deleteJob, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_JOB);
 
   const userData = data?.me || {};
+  console.log('Saved Jobs:', JSON.stringify(userData.savedJobs, null, 2));
 
   const handleDeleteJob = async (jobId: string) => {
     try {
@@ -47,22 +48,45 @@ const SavedJobs = () => {
               }:`
             : 'You have no saved jobs!'}
         </h2>
-        <div>
+        <div className="row">
           {userData.savedJobs?.map((job: Job) => (
-            <div key={job.jobId}>
-              <h3>{job.jobTitle}</h3>
-              <p>Company: {job.companyName}</p>  {/* Updated to 'companyName' */}
-              <p>Location: {job.locationName}</p>
-              <p>Salary: {job.salary}</p>
-              <p>{job.description ? job.description : 'No description available'}</p>
-              <a href={job.link} className="btn btn-info" target="_blank" rel="noopener noreferrer">
+            <div key={job.jobId} className="col-md-6 mb-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <h3 className="card-title">{job.jobTitle}</h3>
+                  <h4 className="card-subtitle mb-2 text-muted">{job.companyName}</h4>
+                  <p className="card-text"><strong>Location:</strong> {job.locationName}</p>
+                  <p className="card-text"><strong>Salary:</strong> {job.salary || 'N/A'}</p>
+                  <div className="card-text mb-3">
+                    <strong>Description:</strong>
+                    <p className="description-text">
+                      {job.description
+                        ? job.description.length > 200
+                          ? `${job.description.substring(0, 200)}...`
+                          : job.description
+                        : 'No description available'}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <a
+                      href={job.link || '#'}
+                      className="btn btn-info"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       View Full Posting
                     </a>
-              <br />
-              <button onClick={() => handleDeleteJob(job.jobId)} disabled={deleteLoading}>
-                {deleteLoading ? 'Deleting...' : 'Delete this Job!'}
-              </button>
-              {deleteError && <p style={{ color: 'red' }}>Error: {deleteError.message}</p>}
+                    <button
+                      onClick={() => handleDeleteJob(job.jobId)}
+                      disabled={deleteLoading}
+                      className="btn btn-danger"
+                    >
+                      {deleteLoading ? 'Deleting...' : 'Delete this Job!'}
+                    </button>
+                  </div>
+                  {deleteError && <p style={{ color: 'red' }}>Error: {deleteError.message}</p>}
+                </div>
+              </div>
             </div>
           ))}
         </div>

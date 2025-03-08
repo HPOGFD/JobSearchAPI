@@ -166,6 +166,7 @@ const SearchJobs = () => {
                     <p className="description-text">{job.description.length > 200 ? `${job.description.substring(0, 200)}...` : job.description}</p>
                   </div>
                   <div className="d-flex justify-content-between">
+                    
                     <a href={job.link} className="btn btn-info" target="_blank" rel="noopener noreferrer">
                       View Full Posting
                     </a>
