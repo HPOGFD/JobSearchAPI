@@ -4,8 +4,8 @@ import { DELETE_JOB } from '../utils/mutations';  // Assuming DELETE_JOB mutatio
 import { Job } from '../models/Job';  // Define your Job model
 
 const SavedJobs = () => {
-  const { loading, data, refetch } = useQuery(GET_ME);
-  const [deleteJob] = useMutation(DELETE_JOB);
+  const { loading, data, refetch, error } = useQuery(GET_ME);
+  const [deleteJob, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_JOB);
 
   const userData = data?.me || {};
 
@@ -22,12 +22,16 @@ const SavedJobs = () => {
       // Refetch the user's data to update the UI
       refetch();
     } catch (err) {
-      console.error(err);
+      console.error('Error deleting job:', err);
     }
   };
 
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>Error loading user data: {error.message}</h2>;
   }
 
   return (
@@ -47,12 +51,18 @@ const SavedJobs = () => {
           {userData.savedJobs?.map((job: Job) => (
             <div key={job.jobId}>
               <h3>{job.jobTitle}</h3>
-              <p>Organization: {job.organizationName}</p>
+              <p>Company: {job.companyName}</p>  {/* Updated to 'companyName' */}
               <p>Location: {job.locationName}</p>
               <p>Salary: {job.salary}</p>
-              <button onClick={() => handleDeleteJob(job.jobId)}>
-                Delete this Job!
+              <p>{job.description ? job.description : 'No description available'}</p>
+              <a href={job.link} target="_blank" rel="noopener noreferrer">
+                View Full Job Posting
+              </a>
+              <br />
+              <button onClick={() => handleDeleteJob(job.jobId)} disabled={deleteLoading}>
+                {deleteLoading ? 'Deleting...' : 'Delete this Job!'}
               </button>
+              {deleteError && <p style={{ color: 'red' }}>Error: {deleteError.message}</p>}
             </div>
           ))}
         </div>

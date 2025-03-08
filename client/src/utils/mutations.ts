@@ -1,4 +1,3 @@
-
 import { gql } from '@apollo/client';
 
 // Get logged-in user's data
@@ -11,9 +10,11 @@ export const GET_ME = gql`
       savedJobs {
         jobId
         jobTitle
-        organizationName
+        companyName
         locationName
         salary
+        description
+        link
       }
     }
   }
@@ -29,9 +30,11 @@ export const GET_USER = gql`
       savedJobs {
         jobId
         jobTitle
-        organizationName
+        companyName
         locationName
         salary
+        description
+        link
       }
     }
   }
@@ -74,9 +77,11 @@ export const SAVE_JOB = gql`
       savedJobs {
         jobId
         jobTitle
-        organizationName
+        companyName
         locationName
         salary
+        description
+        link
       }
     }
   }
@@ -91,9 +96,11 @@ export const DELETE_JOB = gql`
       savedJobs {
         jobId
         jobTitle
-        organizationName
+        companyName
         locationName
         salary
+        description
+        link
       }
     }
   }
