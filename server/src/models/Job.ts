@@ -9,6 +9,7 @@ export interface JobDocument extends Document {
   description: string;
   link: string;
   comment?: string;
+  status?: string;
 }
 
 const jobSchema = new Schema<JobDocument>({
@@ -38,7 +39,12 @@ const jobSchema = new Schema<JobDocument>({
   },
   comment: {
     type: String
-  }
+  },
+  status: {
+    type: String,
+    enum: ['Applied', 'Researching', 'On Hold'],
+    default: 'Researching',
+  },
 });
 
 const Job = model<JobDocument>('Job', jobSchema);

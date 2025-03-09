@@ -123,3 +123,19 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const UPDATE_JOB_STATUS = gql`
+  mutation UpdateJobStatus($jobId: ID!, $status: String!) {
+    updateJobStatus(jobId: $jobId, status: $status) {
+      jobId
+      jobTitle
+      companyName
+      locationName
+      salary
+      description
+      link
+      comment
+      status
+    }
+  }
+`;

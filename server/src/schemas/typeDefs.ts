@@ -18,6 +18,7 @@ const typeDefs = gql`
     link: String
     description: String
     comment: String
+    status: String
   }
 
   type Auth {
@@ -33,7 +34,9 @@ const typeDefs = gql`
     salary: String
     description: String
     link: String
-  }
+    status: String
+
+ }
 
   type Query {
     getSingleUser(id: ID, username: String): User
@@ -46,6 +49,7 @@ const typeDefs = gql`
     saveJob(jobInput: JobInput!): User
     deleteJob(jobId: String!): User
     addComment(jobId: String!, comment: String!): Job
+    updateJobStatus(jobId: ID!, status: String!): Job
   }
 `;
 

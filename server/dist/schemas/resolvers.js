@@ -69,16 +69,53 @@ const resolvers = {
             console.log("After delete - User has job:", updatedUser?.savedJobs.some(job => job.jobId === jobId));
             return updatedUser;
         },
-        addComment: async (_, { jobId, comment }, { user }) => {
-            if (!user)
-                throw new AuthenticationError('You need to be logged in!');
-            const updatedUser = await User.findOneAndUpdate({ _id: user._id, 'savedJobs.jobId': jobId }, { $set: { 'savedJobs.$.comment': comment } }, { new: true });
-            if (!updatedUser)
-                throw new Error('Job not found in saved jobs');
-            const updatedJob = updatedUser.savedJobs.find(job => job.jobId === jobId);
-            console.log('Updated Job:', updatedJob);
-            return updatedJob;
+        updateJobStatus: async (_, { jobId, status }, context) => {
+            if (context.user) {
+                try {
+                    const updatedUser = await User.findOneAndUpdate({
+                        _id: context.user._id,
+                        "savedJobs.jobId": jobId
+                    }, {
+                        $set: { "savedJobs.$.status": status }
+                    }, { new: true });
+                    if (!updatedUser) {
+                        throw new Error('Job not found in user\'s saved jobs');
+                    }
+                    // Find the updated job to return
+                    const updatedJob = updatedUser.savedJobs.find(job => job.jobId === jobId);
+                    return updatedJob;
+                }
+                catch (err) {
+                    console.error('Error updating job status:', err);
+                    throw new Error('Failed to update job status');
+                }
+            }
+            throw new AuthenticationError('You need to be logged in!');
         },
-    }
+        // Existing addComment mutation - ensure it's similar in structure
+        addComment: async (_, { jobId, comment }, context) => {
+            if (context.user) {
+                try {
+                    const updatedUser = await User.findOneAndUpdate({
+                        _id: context.user._id,
+                        "savedJobs.jobId": jobId
+                    }, {
+                        $set: { "savedJobs.$.comment": comment }
+                    }, { new: true });
+                    if (!updatedUser) {
+                        throw new Error('Job not found in user\'s saved jobs');
+                    }
+                    // Find the updated job to return
+                    const updatedJob = updatedUser.savedJobs.find(job => job.jobId === jobId);
+                    return updatedJob;
+                }
+                catch (err) {
+                    console.error('Error adding comment:', err);
+                    throw new Error('Failed to add comment');
+                }
+            }
+            throw new AuthenticationError('You need to be logged in!');
+        },
+    },
 };
 export default resolvers;

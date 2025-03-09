@@ -26,7 +26,12 @@ const jobSchema = new Schema({
     },
     comment: {
         type: String
-    }
+    },
+    status: {
+        type: String,
+        enum: ['Applied', 'Researching', 'On Hold'],
+        default: 'Researching',
+    },
 });
 const Job = model('Job', jobSchema);
 // Export both the model and the schema

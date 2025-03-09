@@ -6,5 +6,6 @@ export interface Job {
   salary: string;
   description: string;   
   link: string;   
-  comment: string;      
+  comment: string;  
+  status: string;    
 }

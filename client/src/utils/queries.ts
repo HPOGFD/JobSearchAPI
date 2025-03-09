@@ -17,6 +17,7 @@ export const GET_ME = gql`
         link
         description
         comment 
+        status
       }
     }
   }
@@ -38,6 +39,7 @@ export const GET_USER = gql`
         link
         description
         comment 
+        status
       }
     }
   }
