@@ -15,7 +15,6 @@ const jobSchema = new Schema<JobDocument>({
   jobId: {
     type: String,
     required: true,
-    unique: true
   },
   jobTitle: {
     type: String,

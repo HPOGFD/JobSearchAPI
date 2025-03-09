@@ -51,23 +51,36 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-
     saveJob: async (_: unknown, { jobInput }: { jobInput: JobDocument }, context: Context) => {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
-
-      // Find and update the user
+    
+      // First check if the job already exists
+      const existingUser = await User.findOne({
+        _id: context.user._id,
+        'savedJobs.jobId': jobInput.jobId
+      });
+    
+      if (existingUser) {
+        // If job exists, remove it first to ensure clean state
+        await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { savedJobs: { jobId: jobInput.jobId } } }
+        );
+      }
+    
+      // Then add the job
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
         { $addToSet: { savedJobs: jobInput } },
         { new: true, runValidators: true }
       ).exec();
-
+    
       if (!updatedUser) {
         throw new Error('User not found');
       }
-
+    
       return updatedUser; 
     },
 
@@ -75,12 +88,22 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
-
-      return await User.findByIdAndUpdate(
+    
+      // Find the user first to check if the job exists
+      const user = await User.findById(context.user._id);
+      console.log("Before delete - User has job:", 
+        user?.savedJobs.some(job => job.jobId === jobId));
+    
+      const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $pull: { savedJobs: { jobId } } },
+        { $pull: { savedJobs: { jobId: jobId } } },
         { new: true }
       );
+    
+      console.log("After delete - User has job:", 
+        updatedUser?.savedJobs.some(job => job.jobId === jobId));
+    
+      return updatedUser;
     },
 
     addComment: async (

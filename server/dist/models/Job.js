@@ -3,7 +3,6 @@ const jobSchema = new Schema({
     jobId: {
         type: String,
         required: true,
-        unique: true
     },
     jobTitle: {
         type: String,
