@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
 // Import schema from Job.js
-import jobSchema from './Job.js';
+import { jobSchema } from './Job.js';
 const userSchema = new Schema({
     username: {
         type: String,
@@ -18,8 +18,8 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    // Set savedJobs to be an array of data that adheres to the jobSchema
-    savedJobs: [jobSchema], // Updated from savedBooks to savedJobs
+    // Set savedJobs to be an array of job schemas
+    savedJobs: [jobSchema],
 }, {
     toJSON: {
         virtuals: true,
@@ -37,7 +37,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
-// Virtual field for job count (similar to bookCount, but for jobs)
+// Virtual field for job count
 userSchema.virtual('jobCount').get(function () {
     return this.savedJobs.length;
 });

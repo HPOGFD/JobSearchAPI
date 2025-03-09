@@ -1,7 +1,9 @@
 import { AuthenticationError } from 'apollo-server-errors';
 import User, { UserDocument } from '../models/User.js';
-import { signToken } from '../middleware/Auth.js'; // Import signToken instead of authMiddleware
-import { JobDocument } from '../models/Job.js'; // Updated from BookDocument
+import { signToken } from '../middleware/Auth.js';
+import { JobDocument } from '../models/Job.js';
+
+
 
 interface Context {
   user?: UserDocument;
@@ -54,18 +56,18 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
-    
+
       // Find and update the user
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $addToSet: { savedJobs: jobInput } }, // Updated from savedBooks to savedJobs
+        { $addToSet: { savedJobs: jobInput } },
         { new: true, runValidators: true }
       ).exec();
-    
+
       if (!updatedUser) {
         throw new Error('User not found');
       }
-    
+
       return updatedUser; 
     },
 
@@ -76,11 +78,28 @@ const resolvers = {
 
       return await User.findByIdAndUpdate(
         context.user._id,
-        { $pull: { savedJobs: { jobId } } }, // Updated from savedBooks to savedJobs
+        { $pull: { savedJobs: { jobId } } },
         { new: true }
       );
     },
-  },
-};
 
+    addComment: async (
+      _: unknown,
+      { jobId, comment }: { jobId: string; comment: string },
+      { user }: Context
+    ) => {
+      if (!user) throw new AuthenticationError('You need to be logged in!');
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: user._id, 'savedJobs.jobId': jobId },
+        { $set: { 'savedJobs.$.comment': comment } },
+        { new: true }
+      );
+      if (!updatedUser) throw new Error('Job not found in saved jobs');
+      const updatedJob = updatedUser.savedJobs.find(job => job.jobId === jobId);
+      console.log('Updated Job:', updatedJob);
+      return updatedJob;
+    },
+    
+}
+};
 export default resolvers;

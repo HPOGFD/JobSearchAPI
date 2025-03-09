@@ -12,10 +12,11 @@ const typeDefs = gql `
     jobId: String!
     jobTitle: String!
     companyName: String!
-    locationName: String!
+    locationName: String
     salary: String
-    description: String
     link: String
+    description: String
+    comment: String
   }
 
   type Auth {
@@ -27,7 +28,7 @@ const typeDefs = gql `
     jobId: String!
     jobTitle: String!
     companyName: String!
-    locationName: String!
+    locationName: String # Optional to match Job?
     salary: String
     description: String
     link: String
@@ -40,9 +41,10 @@ const typeDefs = gql `
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
-    login(username: String, email: String, password: String!): Auth
+    login(email: String!, password: String!): Auth
     saveJob(jobInput: JobInput!): User
     deleteJob(jobId: String!): User
+    addComment(jobId: String!, comment: String!): Job
   }
 `;
 export default typeDefs;

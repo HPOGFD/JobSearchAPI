@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-errors';
 import User from '../models/User.js';
-import { signToken } from '../middleware/Auth.js'; // Import signToken instead of authMiddleware
+import { signToken } from '../middleware/Auth.js';
 const resolvers = {
     Query: {
         getSingleUser: async (_, { id, username }) => {
@@ -43,8 +43,7 @@ const resolvers = {
                 throw new AuthenticationError('You need to be logged in!');
             }
             // Find and update the user
-            const updatedUser = await User.findByIdAndUpdate(context.user._id, { $addToSet: { savedJobs: jobInput } }, // Updated from savedBooks to savedJobs
-            { new: true, runValidators: true }).exec();
+            const updatedUser = await User.findByIdAndUpdate(context.user._id, { $addToSet: { savedJobs: jobInput } }, { new: true, runValidators: true }).exec();
             if (!updatedUser) {
                 throw new Error('User not found');
             }
@@ -54,9 +53,18 @@ const resolvers = {
             if (!context.user) {
                 throw new AuthenticationError('You need to be logged in!');
             }
-            return await User.findByIdAndUpdate(context.user._id, { $pull: { savedJobs: { jobId } } }, // Updated from savedBooks to savedJobs
-            { new: true });
+            return await User.findByIdAndUpdate(context.user._id, { $pull: { savedJobs: { jobId } } }, { new: true });
         },
-    },
+        addComment: async (_, { jobId, comment }, { user }) => {
+            if (!user)
+                throw new AuthenticationError('You need to be logged in!');
+            const updatedUser = await User.findOneAndUpdate({ _id: user._id, 'savedJobs.jobId': jobId }, { $set: { 'savedJobs.$.comment': comment } }, { new: true });
+            if (!updatedUser)
+                throw new Error('Job not found in saved jobs');
+            const updatedJob = updatedUser.savedJobs.find(job => job.jobId === jobId);
+            console.log('Updated Job:', updatedJob);
+            return updatedJob;
+        },
+    }
 };
 export default resolvers;

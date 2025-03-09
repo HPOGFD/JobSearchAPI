@@ -1,32 +1,35 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 const jobSchema = new Schema({
     jobId: {
         type: String,
         required: true,
+        unique: true
     },
     jobTitle: {
         type: String,
-        required: true,
+        required: true
     },
     companyName: {
         type: String,
-        required: true,
+        required: true
     },
     locationName: {
-        type: String,
-        required: true,
+        type: String
     },
     salary: {
-        type: String,
-        required: true,
+        type: String
     },
     description: {
-        type: String,
-        required: true,
+        type: String
     },
     link: {
-        type: String,
-        required: true,
+        type: String
     },
+    comment: {
+        type: String
+    }
 });
-export default jobSchema;
+const Job = model('Job', jobSchema);
+// Export both the model and the schema
+export { jobSchema };
+export default Job;

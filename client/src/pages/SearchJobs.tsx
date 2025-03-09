@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import { SAVE_JOB } from '../utils/mutations';
 import Auth from '../utils/auth';
 
+
 // Define Job interface based on the Adzuna API response
 interface Job {
   jobId: string;
@@ -157,6 +158,9 @@ const SearchJobs = () => {
             <div key={job.jobId} className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
+                <p className="text-secondary bg-dark p-3">You need to be logged in to share your thoughts.</p>
+
+
                   <h3 className="card-title">{job.jobTitle}</h3>
                   <h4 className="card-subtitle mb-2 text-muted">{job.companyName}</h4>
                   <p className="card-text"><strong>Location:</strong> {job.locationName}</p>

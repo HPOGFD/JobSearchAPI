@@ -14,7 +14,8 @@ export const GET_ME = gql`
         locationName
         salary
         description
-        link  
+        link
+        comment  
       }
     }
   }
@@ -102,6 +103,23 @@ export const DELETE_JOB = gql`
         description
         link 
       }
+    }
+  }
+`;
+
+
+// add comment to a job
+export const ADD_COMMENT = gql`
+  mutation addComment($jobId: String!, $comment: String!) {
+    addComment(jobId: $jobId, comment: $comment) {
+      jobId
+      jobTitle
+      companyName
+      locationName
+      salary
+      description
+      link
+      comment 
     }
   }
 `;

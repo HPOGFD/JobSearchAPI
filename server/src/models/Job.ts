@@ -1,4 +1,4 @@
-import { Schema, type Document } from 'mongoose';
+import { Schema, model, type Document } from 'mongoose';
 
 export interface JobDocument extends Document {
   jobId: string;
@@ -8,37 +8,42 @@ export interface JobDocument extends Document {
   salary: string;
   description: string;
   link: string;
+  comment?: string;
 }
 
 const jobSchema = new Schema<JobDocument>({
   jobId: {
     type: String,
     required: true,
+    unique: true
   },
   jobTitle: {
     type: String,
-    required: true,
+    required: true
   },
   companyName: {
     type: String,
-    required: true,
+    required: true
   },
   locationName: {
-    type: String,
-    required: true,
+    type: String
   },
   salary: {
-    type: String,
-    required: true,
+    type: String
   },
   description: {
-    type: String,
-    required: true,
+    type: String
   },
   link: {
-    type: String,
-    required: true,
+    type: String
   },
+  comment: {
+    type: String
+  }
 });
 
-export default jobSchema;
+const Job = model<JobDocument>('Job', jobSchema);
+
+// Export both the model and the schema
+export { jobSchema };
+export default Job;
