@@ -1,4 +1,5 @@
 
+
 interface Project {
   id: string;
   title: string;
@@ -11,7 +12,6 @@ interface Project {
 }
 
 const PortfolioProjects = () => {
-  // Sample projects - replace with your actual projects
   const projects: Project[] = [
     {
       id: 'job-search',
@@ -25,24 +25,35 @@ const PortfolioProjects = () => {
     },
     {
       id: 'project-2',
-      title: 'Project 2',
-      description: 'Description of your second project. Highlight the key features and what problems it solves.',
-      technologies: ['React', 'CSS', 'Firebase'],
+      title: 'Google Books Search API',
+      description: 'A full-stack MERN application integrating Google Books API with GraphQL and MongoDB.',
+      technologies: ['React', 'CSS', 'Firebase', 'GraphQL', 'MongoDB', 'Node.js', 'Express'],
       image: '/api/placeholder/600/400',
       githubLink: 'https://github.com/yourusername/project-2',
+      liveLink: 'https://project-3-demo.com',
       featured: false
     },
     {
       id: 'project-3',
-      title: 'Project 3',
-      description: 'Description of your third project. Highlight the key features and what problems it solves.',
-      technologies: ['JavaScript', 'HTML', 'CSS'],
+      title: 'Social Network API',
+      description: 'A social network API built with Express.js, MongoDB, and TypeScript, providing CRUD operations for thoughts, reactions, and friends.',
+      technologies: ['JavaScript', 'HTML', 'CSS', 'Node.js', 'Express', 'MongoDB', 'Mongoose'],
       image: '/api/placeholder/600/400',
       githubLink: 'https://github.com/yourusername/project-3',
       liveLink: 'https://project-3-demo.com',
       featured: false
     }
-    // Add more projects as needed
+,
+{
+    id: 'project-3',
+    title: 'Social Network API',
+    description: 'A social network API built with Express.js, MongoDB, and TypeScript, providing CRUD operations for thoughts, reactions, and friends.',
+    technologies: ['JavaScript', 'HTML', 'CSS', 'Node.js', 'Express', 'MongoDB', 'Mongoose'],
+    image: '/api/placeholder/600/400',
+    githubLink: 'https://github.com/yourusername/project-3',
+    liveLink: 'https://project-3-demo.com',
+    featured: false
+  }
   ];
 
   const featuredProjects = projects.filter(project => project.featured);
@@ -50,8 +61,8 @@ const PortfolioProjects = () => {
 
   return (
     <section className="my-5">
-      <div className="card border-success">
-        <div className="card-header bg-success text-white">
+      <div className="card bg-dark text-light">
+        <div className="card-header bg-transparent text-light">
           <h2 className="mb-0">My Projects</h2>
         </div>
         <div className="card-body">
@@ -61,7 +72,7 @@ const PortfolioProjects = () => {
               <div className="row">
                 {featuredProjects.map(project => (
                   <div key={project.id} className="col-12 mb-5">
-                    <div className="card h-100 border-primary shadow">
+                    <div className="card h-100 shadow bg-secondary text-light">
                       <div className="row g-0">
                         <div className="col-md-4">
                           <img 
@@ -77,11 +88,11 @@ const PortfolioProjects = () => {
                             <p className="card-text">{project.description}</p>
                             <div className="mb-3">
                               {project.technologies.map((tech, index) => (
-                                <span key={index} className="badge bg-secondary me-2 mb-2">{tech}</span>
+                                <span key={index} className="badge bg-light text-dark me-2 mb-2">{tech}</span>
                               ))}
                             </div>
                             <div className="d-flex">
-                              <a href={project.githubLink} className="btn btn-dark me-2" target="_blank" rel="noopener noreferrer">
+                              <a href={project.githubLink} className="btn btn-light me-2" target="_blank" rel="noopener noreferrer">
                                 GitHub Repo
                               </a>
                               {project.liveLink && (
@@ -104,7 +115,7 @@ const PortfolioProjects = () => {
           <div className="row">
             {otherProjects.map(project => (
               <div key={project.id} className="col-md-6 col-lg-4 mb-4">
-                <div className="card h-100 shadow">
+                <div className="card h-100 shadow bg-secondary text-light">
                   <img 
                     src={project.image}
                     alt={project.title} 
@@ -117,13 +128,13 @@ const PortfolioProjects = () => {
                     <p className="card-text">{project.description}</p>
                     <div className="mb-3">
                       {project.technologies.map((tech, index) => (
-                        <span key={index} className="badge bg-secondary me-2 mb-2">{tech}</span>
+                        <span key={index} className="badge bg-light text-dark me-2 mb-2">{tech}</span>
                       ))}
                     </div>
                   </div>
-                  <div className="card-footer bg-white border-top-0">
+                  <div className="card-footer bg-dark">
                     <div className="d-flex">
-                      <a href={project.githubLink} className="btn btn-dark me-2" target="_blank" rel="noopener noreferrer">
+                      <a href={project.githubLink} className="btn btn-light me-2" target="_blank" rel="noopener noreferrer">
                         GitHub
                       </a>
                       {project.liveLink && (

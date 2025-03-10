@@ -16,7 +16,7 @@ const AppNavbar = () => {
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            <span className="fw-bold text-primary">Harry P Oyarvide</span> | Portfolio
+            <span className="fw-bold text-danger">Harry P Oyarvide</span> | Portfolio
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
