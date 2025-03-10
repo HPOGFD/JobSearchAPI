@@ -16,23 +16,36 @@ const AppNavbar = () => {
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-             Jobs Search
+            <span className="fw-bold text-primary">Harry P Oyarvide</span> | Portfolio
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
-            <Nav className='ml-auto d-flex'>
+          <Navbar.Collapse id='navbar'>
+            <Nav className='me-auto'>
               <Nav.Link as={Link} to='/'>
+                About Me
+              </Nav.Link>
+              <Nav.Link as={Link} to='/projects'>
+                Projects
+              </Nav.Link>
+              <Nav.Link as={Link} to='/jobs'>
                 Search For Jobs
               </Nav.Link>
+              {Auth.loggedIn() && (
+                <Nav.Link as={Link} to='/saved'>
+                  Saved Jobs
+                </Nav.Link>
+              )}
+            </Nav>
+            
+            <Nav>
               {Auth.loggedIn() ? (
-                <>
-                  <Nav.Link as={Link} to='/saved'>
-                    See Your Jobs
-                  </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
-                </>
+                <Nav.Link onClick={Auth.logout}>
+                  Logout
+                </Nav.Link>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link onClick={() => setShowModal(true)}>
+                  Login/Sign Up
+                </Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>

@@ -3,8 +3,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
-import SearchJobs from './pages/SearchJobs';  // Updated component name
-import SavedJobs from './pages/SavedJobs';  // Updated component name
+import SearchJobs from './pages/SearchJobs';
+import SavedJobs from './pages/SavedJobs';
+import PortfolioPage from './pages/AboutmePage';
+import ProjectsPage from './pages/ProjectsPage'; // Import the new ProjectsPage component
 
 // Define the routes for the jobs-related app
 const router = createBrowserRouter([
@@ -15,11 +17,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <SearchJobs />  // Component for searching jobs
+        element: <PortfolioPage /> // Make PortfolioPage the default/home page
+      },
+      {
+        path: '/projects',
+        element: <ProjectsPage /> // Add the new Projects route
+      },
+      {
+        path: '/jobs',
+        element: <SearchJobs /> // Move job search to /jobs route
       },
       {
         path: '/saved',
-        element: <SavedJobs />  // Component for viewing saved jobs
+        element: <SavedJobs /> // Keep saved jobs route
       }
     ]
   }

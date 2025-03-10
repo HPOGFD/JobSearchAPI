@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 
 import Navbar from './components/Navbar';
+import Footer from './components/FooterComponent';
 
 // HTTP link to GraphQL endpoint
 const httpLink = createHttpLink({
@@ -32,8 +33,9 @@ function App() {
     <ApolloProvider client={client}>
       <Navbar />
       <Outlet />
+      <Footer />
     </ApolloProvider>
   );
-}
+} 
 
 export default App;
