@@ -18,8 +18,8 @@ const PortfolioProjects = () => {
       title: 'Job Search Platform',
       description: 'A full-stack application that allows users to search for jobs, save them, and add notes to track application progress.',
       technologies: ['React', 'TypeScript', 'GraphQL', 'MongoDB', 'Node.js', 'Express', 'Bootstrap'],
-      image: '/api/placeholder/600/400',
-      githubLink: 'https://github.com/yourusername/job-search',
+      image: 'images/whip.gif',
+      githubLink: 'https://github.com/HPOGFD/JobSearchAPI.git',
       liveLink: 'https://your-job-search-app.com',
       featured: true
     },
@@ -28,9 +28,9 @@ const PortfolioProjects = () => {
       title: 'Google Books Search API',
       description: 'A full-stack MERN application integrating Google Books API with GraphQL and MongoDB.',
       technologies: ['React', 'CSS', 'Firebase', 'GraphQL', 'MongoDB', 'Node.js', 'Express'],
-      image: '/api/placeholder/600/400',
-      githubLink: 'https://github.com/yourusername/project-2',
-      liveLink: 'https://project-3-demo.com',
+      image: 'images/whip.gif',
+      githubLink: 'https://github.com/HPOGFD/NoRESTapi.git',
+      liveLink: 'norestapi.onrender.com',
       featured: false
     },
     {
@@ -38,19 +38,18 @@ const PortfolioProjects = () => {
       title: 'Social Network API',
       description: 'A social network API built with Express.js, MongoDB, and TypeScript, providing CRUD operations for thoughts, reactions, and friends.',
       technologies: ['JavaScript', 'HTML', 'CSS', 'Node.js', 'Express', 'MongoDB', 'Mongoose'],
-      image: '/api/placeholder/600/400',
-      githubLink: 'https://github.com/yourusername/project-3',
-      liveLink: 'https://project-3-demo.com',
-      featured: false
+      image: 'images/whip.gif',
+      githubLink: 'https://github.com/HPOGFD/ThinkConnectAPI.git',
+        featured: false
     }
 ,
 {
-    id: 'project-3',
-    title: 'Social Network API',
-    description: 'A social network API built with Express.js, MongoDB, and TypeScript, providing CRUD operations for thoughts, reactions, and friends.',
+    id: 'project-4',
+    title: 'Search Movies API',
+    description: `The Movie Stream app recommends movies and allows users to save titles to custom lists, and shows streaming availability. It features a full-stack design with a responsive front end, Node.js/Express back end, and a PostgreSQL database.`,
     technologies: ['JavaScript', 'HTML', 'CSS', 'Node.js', 'Express', 'MongoDB', 'Mongoose'],
-    image: '/api/placeholder/600/400',
-    githubLink: 'https://github.com/yourusername/project-3',
+    image: 'images/whip.gif',
+    githubLink: 'https://github.com/HPOGFD/APImovies.git',
     liveLink: 'https://project-3-demo.com',
     featured: false
   }

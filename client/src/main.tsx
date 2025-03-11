@@ -7,6 +7,7 @@ import SearchJobs from './pages/SearchJobs';
 import SavedJobs from './pages/SavedJobs';
 import PortfolioPage from './pages/AboutmePage';
 import ProjectsPage from './pages/ProjectsPage'; // Import the new ProjectsPage component
+import PostPage from './pages/PostPage';
 
 // Define the routes for the jobs-related app
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/projects',
         element: <ProjectsPage /> // Add the new Projects route
+      },
+      {
+        path: '/posts',
+        element: <PostPage /> // New Posts route
       },
       {
         path: '/jobs',
