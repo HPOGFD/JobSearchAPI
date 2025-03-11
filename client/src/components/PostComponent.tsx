@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import Auth from '../utils/auth';
-
-interface Post {
-  id: number;
-  text: string;
-  author: string;
-  timestamp: string;
-  likes: number;
-}
+import { Post } from '../interfaces/PostInterface';
 
 interface PostComponentProps {
   posts: Post[];
@@ -16,11 +9,11 @@ interface PostComponentProps {
 }
 
 const PostComponent: React.FC<PostComponentProps> = ({ posts, setPosts }) => {
-  const [postText, setPostText] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [postText, setPostText] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!postText.trim()) {
@@ -28,13 +21,18 @@ const PostComponent: React.FC<PostComponentProps> = ({ posts, setPosts }) => {
       return;
     }
 
+    // Get user profile data from Auth
+    const userProfile = Auth.getProfile();
+    
     // Create new post object
-    const newPost = {
+    const newPost: Post = {
       id: Date.now(), // simple ID generation
       text: postText,
-      author: Auth.getProfile()?.data?.username || 'Anonymous User',
+      author: userProfile?.data?.username || 'Anonymous User',
       timestamp: new Date().toISOString(),
-      likes: 0
+      likes: 0,
+      authorId: userProfile?.data?._id || undefined,
+      edited: false
     };
 
     // Add new post to posts array
@@ -59,7 +57,7 @@ const PostComponent: React.FC<PostComponentProps> = ({ posts, setPosts }) => {
     );
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = { 
       year: 'numeric', 
       month: 'short', 
@@ -104,7 +102,12 @@ const PostComponent: React.FC<PostComponentProps> = ({ posts, setPosts }) => {
                 <Card.Body>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <h5 className="card-subtitle text-primary">{post.author}</h5>
-                    <small className="text-muted">{formatDate(post.timestamp)}</small>
+                    <small className="text-muted">
+                      {formatDate(post.timestamp)}
+                      {post.edited && 
+                        <span className="ms-2">(edited)</span>
+                      }
+                    </small>
                   </div>
                   <Card.Text>{post.text}</Card.Text>
                   <Button 
@@ -130,7 +133,7 @@ const PostComponent: React.FC<PostComponentProps> = ({ posts, setPosts }) => {
           <Card.Body className="text-center">
             <Card.Title className="text-danger">Login Required</Card.Title>
             <Card.Text>Please login or sign up to view and create posts.</Card.Text>
-            <Button variant="primary" onClick={() => window.location.href = '/'}>
+            <Button variant="primary" onClick={() => window.scrollTo(0, 0)}>
               Go to Login
             </Button>
           </Card.Body>

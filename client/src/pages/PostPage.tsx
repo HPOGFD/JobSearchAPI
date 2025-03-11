@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import PostComponent from '../components/PostComponent';
 import Auth from '../utils/auth';
+import { Post } from '../interfaces/PostInterface';
 
-const PostPage = () => {
-  const [posts, setPosts] = useState([]);
+const PostPage: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
 
   // Load posts from localStorage on component mount
   useEffect(() => {
     const savedPosts = localStorage.getItem('userPosts');
     if (savedPosts) {
-      setPosts(JSON.parse(savedPosts));
+      try {
+        setPosts(JSON.parse(savedPosts));
+      } catch (e) {
+        console.error('Failed to parse saved posts', e);
+        localStorage.removeItem('userPosts');
+      }
     }
   }, []);
 
