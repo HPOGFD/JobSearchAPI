@@ -16,23 +16,18 @@ const AppNavbar = () => {
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            <span className="fw-bold text-danger">Harry P Oyarvide</span> | Portfolio
+            <span className="fw-bold text-danger">Jobs API</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='me-auto'>
-              <Nav.Link as={Link} to='/'>
-                About Me
-              </Nav.Link>
-              <Nav.Link as={Link} to='/projects'>
-                Projects
-              </Nav.Link>
-              <Nav.Link as={Link} to='/posts'>
-                Community
-              </Nav.Link>
-              <Nav.Link as={Link} to='/jobs'>
+            <Nav.Link as={Link} to='/jobs'>
                 Search For Jobs
               </Nav.Link>
+              <Nav.Link as={Link} to='/'>
+                Community
+              </Nav.Link>
+             
               {Auth.loggedIn() && (
                 <Nav.Link as={Link} to='/saved'>
                   Saved Jobs
